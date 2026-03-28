@@ -1,0 +1,43 @@
+[project]
+name = "free-code"
+version = "0.1.0"
+description = "Free AI coding assistant — Claude Code alternative"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [{name = "Free.ai"}]
+keywords = ["ai", "coding", "assistant", "cli", "free"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "click>=8.0",
+    "rich>=13.0",
+    "httpx>=0.25",
+    "pyyaml>=6.0",
+    "pathspec>=0.11",
+    "tiktoken>=0.5",
+]
+
+[project.scripts]
+free-code = "free_code.cli:main"
+
+[project.urls]
+Homepage = "https://free.ai"
+Repository = "https://github.com/nadermx/free-code"
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["free_code*"]
