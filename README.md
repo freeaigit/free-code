@@ -111,6 +111,61 @@ All file operations happen locally on your machine. The AI sees only what it nee
 - [Compare vs Claude Code](https://free.ai/compare/coder-vs-claude-code/)
 - [Compare vs Cursor](https://free.ai/compare/coder-vs-cursor/)
 
+## vs Competitors
+
+| Feature | Free.ai Coder | Claude Code | OpenAI Codex | Cursor | GitHub Copilot |
+|---------|--------------|-------------|--------------|--------|----------------|
+| Free tier | 50K tokens/day | None ($20/mo) | None ($200/mo) | None ($20/mo) | None ($10/mo) |
+| Self-hosted models | Yes (Qwen, DeepSeek) | No | No | No | No |
+| BYOK (bring your own key) | Yes — $0 markup | No | No | Partial | No |
+| Open source CLI | Yes (MIT) | No | No | No | No |
+| Web IDE | Yes (free.ai/coder/) | No | Yes | Yes | No |
+| Terminal access | Yes | Yes | Yes | Yes | No |
+| 346+ models | Yes | Claude only | GPT only | Multiple | GPT only |
+| Session sync (CLI ↔ web) | Yes | No | No | No | No |
+
+## BYOK (Bring Your Own Key)
+
+Use your own API keys from any provider — zero markup, zero fees. Free.ai just proxies the request.
+
+```bash
+# OpenAI
+free-code config set provider openai
+free-code config set api_key sk-proj-xxx
+
+# Anthropic
+free-code config set provider anthropic
+free-code config set api_key sk-ant-xxx
+
+# Google
+free-code config set provider google
+free-code config set api_key AIzaSyxxx
+
+# OpenRouter (access 346+ models)
+free-code config set provider openrouter
+free-code config set api_key sk-or-xxx
+```
+
+When using BYOK, requests go directly to the provider. No markup. No logging. Your key, your usage, your bill.
+
+You can also set keys via environment variables:
+
+```bash
+export FREEAI_PROVIDER=openai
+export FREEAI_API_KEY=sk-proj-xxx
+free-code
+```
+
+## Free.ai Ecosystem
+
+- **[Free.ai](https://free.ai)** — 400+ free AI tools on the web
+- **[Python SDK](https://github.com/freeaigit/free-sdk)** — `pip install freeai` — use Free.ai from your code
+- **[CLI Coder](https://github.com/freeaigit/free-code)** — `pip install freeai-code` — AI coding in your terminal
+- **[iOS App](https://github.com/nadermx/free-ios)** — Native iPhone/iPad app
+- **[Android App](https://github.com/nadermx/free-android)** — Native Android app
+- **[API Docs](https://free.ai/api/)** — Build on top of Free.ai
+- **[Web IDE](https://free.ai/coder/)** — Code in your browser
+
 ## License
 
 MIT
