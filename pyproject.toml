@@ -1,12 +1,12 @@
 [project]
 name = "freeai-code"
-version = "0.1.0"
-description = "Free AI coding assistant — Claude Code alternative"
+version = "0.1.1"
+description = "Free AI coding assistant — open-source Claude Code alternative. pip install freeai-code"
 readme = "README.md"
 requires-python = ">=3.9"
 license = {text = "MIT"}
-authors = [{name = "Free.ai"}]
-keywords = ["ai", "coding", "assistant", "cli", "free"]
+authors = [{name = "Free.ai", email = "hello@free.ai"}]
+keywords = ["ai", "coding", "assistant", "cli", "free", "claude-code", "cursor", "copilot"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Console",
@@ -32,8 +32,11 @@ dependencies = [
 free-code = "free_code.cli:main"
 
 [project.urls]
-Homepage = "https://free.ai"
-Repository = "https://github.com/nadermx/free-code"
+Homepage = "https://free.ai/coder/"
+Documentation = "https://free.ai/api/"
+Repository = "https://github.com/freeaigit/free-code"
+"Bug Tracker" = "https://github.com/freeaigit/free-code/issues"
+Changelog = "https://free.ai/changelog/"
 
 [build-system]
 requires = ["setuptools>=68.0"]
