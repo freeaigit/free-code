@@ -238,3 +238,71 @@ class CoderClient:
             elif event.get("type") == "error":
                 return f"Error: {event.get('content', 'Unknown error')}"
         return "".join(chunks)
+
+    # ==========================================================
+    # Chat Sync — shared sessions between CLI, web, and mobile
+    # ==========================================================
+
+    async def list_sessions(self, limit: int = 20, coder: bool = True) -> List[Dict]:
+        """List synced chat sessions from the server."""
+        base = self.config.get("sync_url", "https://free.ai/api")
+        params = {"limit": limit}
+        if coder:
+            params["coder"] = "1"
+        params["client"] = "cli"
+        async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
+            resp = await client.get(
+                f"{base}/v1/chat/sessions/",
+                headers=self.headers,
+                params=params,
+            )
+            if resp.status_code == 200:
+                return resp.json().get("sessions", [])
+            return []
+
+    async def create_session(self, title: str = "", model: str = "") -> Optional[str]:
+        """Create a new synced session. Returns session_id."""
+        import os
+        base = self.config.get("sync_url", "https://free.ai/api")
+        async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
+            resp = await client.post(
+                f"{base}/v1/chat/sessions/",
+                headers=self.headers,
+                json={
+                    "title": title,
+                    "model": model or self.model,
+                    "client": "cli",
+                    "is_coder": True,
+                    "project_path": os.getcwd(),
+                },
+            )
+            if resp.status_code == 200:
+                return resp.json().get("session_id")
+            return None
+
+    async def get_messages(self, session_id: str, after: str = "") -> List[Dict]:
+        """Get messages from a synced session (for loading history)."""
+        base = self.config.get("sync_url", "https://free.ai/api")
+        params = {}
+        if after:
+            params["after"] = after
+        async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
+            resp = await client.get(
+                f"{base}/v1/chat/sessions/{session_id}/messages/",
+                headers=self.headers,
+                params=params,
+            )
+            if resp.status_code == 200:
+                return resp.json().get("messages", [])
+            return []
+
+    async def sync_messages(self, session_id: str, messages: List[Dict]) -> bool:
+        """Push messages to server for sync. Call after each turn."""
+        base = self.config.get("sync_url", "https://free.ai/api")
+        async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
+            resp = await client.post(
+                f"{base}/v1/chat/sessions/{session_id}/messages/",
+                headers=self.headers,
+                json={"messages": messages},
+            )
+            return resp.status_code == 200
