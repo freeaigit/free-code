@@ -1,5 +1,5 @@
 [project]
-name = "free-code"
+name = "freeai-code"
 version = "0.1.0"
 description = "Free AI coding assistant — Claude Code alternative"
 readme = "README.md"
